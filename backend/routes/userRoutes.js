@@ -21,4 +21,6 @@ router
     isAuthorizedRole("admin"),
     userController.getAllUsers
   );
+router.route("/:userId/addToCart/:productId").post(userController.addToCart);
+router.route("/:userId/cart").get(userController.getCartItems);
 module.exports = router;

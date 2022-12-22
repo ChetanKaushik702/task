@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const Product = require("../models/productModel");
+const Cart = require("../models/cartModel");
 const ErrorHandler = require("../utils/errorHandler");
 const AsyncErrorHandler = require("../middlewares/catchAsyncError");
 const sendToken = require("../utils/jwtToken");
@@ -91,6 +93,45 @@ const getAllUsers = AsyncErrorHandler(async (req, res, next) => {
   });
 });
 
+// add to cart : USER
+const addToCart = AsyncErrorHandler(async (req, res, next) => {
+  const { productId, userId } = req.params;
+  if (!userId || !productId) {
+    return next(new ErrorHandler("Please login or select a product", 400));
+  }
+  const product = await Product.findOne({ _id: productId });
+  const user = await User.findOne({ _id: userId });
+  if (!user || !product) {
+    return next(new ErrorHandler("User or product not found", 404));
+  }
+  let cart = await Cart.findOne({ userId: userId });
+  if (!cart) {
+    cart = await Cart.create({
+      userId: userId,
+    });
+  }
+  cart.products.push(productId);
+  await cart.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Successfully added to cart!",
+  });
+});
+
+// get cart items
+const getCartItems = AsyncErrorHandler(async (req, res, next) => {
+  const { userId } = req.params;
+  const cart = await Cart.findOne({ userId: userId }).populate("products");
+  if (!cart) {
+    return next(new ErrorHandler("Cart not found", 404));
+  }
+  res.status(200).json({
+    success: true,
+    cart,
+  });
+});
+
 module.exports = {
   addUser,
   loginUser,
@@ -98,4 +139,6 @@ module.exports = {
   getUserDetails,
   updatePassword,
   getAllUsers,
+  addToCart,
+  getCartItems,
 };
