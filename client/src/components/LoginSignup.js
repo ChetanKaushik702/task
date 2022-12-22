@@ -22,10 +22,13 @@ const LoginSignup = () => {
   const loginSubmit = (e) => {
     e.preventDefault();
     async function login() {
-      const res = await axios.post("http://localhost:8000/api/v1/user/login", {
-        email: loginEmail,
-        password: loginPassword,
-      });
+      const res = await axios.post(
+        "https://ck-ibrat-task-backend.onrender.com/api/v1/user/login",
+        {
+          email: loginEmail,
+          password: loginPassword,
+        }
+      );
       if (res.data.success) {
         console.log(res.data);
         setUserId(res.data.user._id);
@@ -39,7 +42,7 @@ const LoginSignup = () => {
     e.preventDefault();
     async function register() {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        "https://ck-ibrat-task-backend.onrender.com/api/v1/user/register",
         {
           email: user.email,
           name: user.name,

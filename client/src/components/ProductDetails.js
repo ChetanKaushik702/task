@@ -10,7 +10,7 @@ const ProductDetails = () => {
   const addToCartHandler = () => {
     async function addToCart() {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/user/${userId}/addToCart/${id}`
+        `https://ck-ibrat-task-backend.onrender.com/api/v1/user/${userId}/addToCart/${id}`
       );
       if (res.data.success) {
         console.log(res.data);

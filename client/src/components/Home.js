@@ -9,7 +9,9 @@ function Home() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     async function getProducts() {
-      const res = await axios.get("http://localhost:8000/api/v1/product/all");
+      const res = await axios.get(
+        "https://ck-ibrat-task-backend.onrender.com/api/v1/product/all"
+      );
       setProducts(res.data.products);
     }
     getProducts();

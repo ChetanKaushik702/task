@@ -10,7 +10,7 @@ function ShowCart() {
   useEffect(() => {
     async function getProducts() {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/user/${userId}/cart`
+        `https://ck-ibrat-task-backend.onrender.com/api/v1/user/${userId}/cart`
       );
       setProducts(res.data.cart.products);
     }
