@@ -1,9 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./ProductDetails.css";
 import axios from "axios";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState({});
   const { id, userId } = useParams();
 
@@ -14,6 +16,7 @@ const ProductDetails = () => {
       );
       if (res.data.success) {
         console.log(res.data);
+        navigate(`/cart/${userId}`);
       }
     }
     addToCart();
@@ -21,7 +24,9 @@ const ProductDetails = () => {
 
   useEffect(() => {
     async function getProduct() {
-      const res = await axios.get(`http://localhost:8000/api/v1/product/${id}`);
+      const res = await axios.get(
+        `https://ck-ibrat-task-backend.onrender.com/api/v1/product/${id}`
+      );
       if (res.data.success) {
         setProduct(res.data.product);
       }

@@ -11,14 +11,14 @@ import ShowCart from "./components/ShowCart";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <LoginSignup />,
   },
   {
     path: "/home/:userId",
     element: <Home />,
   },
   {
-    path: "/login",
+    path: "/signup",
     element: <LoginSignup />,
   },
   {
